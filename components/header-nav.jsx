@@ -29,6 +29,10 @@ export default function Head() {
           className="hover:text-primary text-sm font-medium transition-colors">
             Admin
           </Link>
+          <Link href="/login" 
+          className="hover:text-primary text-sm font-medium transition-colors">
+            Login
+          </Link>
           <Modetoggle/>
         </nav>
       
