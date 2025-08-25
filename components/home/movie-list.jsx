@@ -67,9 +67,9 @@ export default async function Movielist() {
 
                 <CardFooter className="flex justify-between p-4">
                     <div className="flex items-center">
-                      <Spam className="text-primary text-xm font-medium">
+                      <span className="text-primary text-xm font-medium">
                         {movie.imdb?.rating}/10 
-                      </Spam>
+                      </span>
                     </div>
                       <Button variant="ghost" size="sm" className="hover:text-primary">
                         Details

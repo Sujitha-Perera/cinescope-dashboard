@@ -1,5 +1,6 @@
 // this is the client component(CSR=Client Site Rendering)
 "use client";
+import { useState } from "react";
 import { 
     Card ,
     CardContent,
@@ -12,8 +13,72 @@ import { Label } from "@/components/ui/label";
 import React from 'react'
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { EMAIL_REGEX } from "@/lib/constants";
+import { signIn } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
+import { Loader2 } from "lucide-react";
+
+
+const DEFAULT_ERROR = {
+  error: false,
+  message: "",
+};
 
 export function LoginForm() {
+
+    const [isLoading,setLoading]=useState(false);
+    const [error,setError]=useState(DEFAULT_ERROR);
+    const validateForm=({email,password})=>{
+        if(email===""){
+            setError({
+                error:true,
+                message:"Email is required."
+            });
+            return false;
+        }else if(password===""){
+            setError({
+                error:true,
+                message:"Password is required."
+            });
+            return false;
+        }else if(!EMAIL_REGEX.test(email)) {
+            setError({
+                error:true,
+                message:"Email is invalid."
+            });
+            return false;
+        } 
+        
+        setError(DEFAULT_ERROR);
+        return true;
+    }
+
+    const handleSubmitForm=async(event)=>{
+        event.preventDefault();//prevent default from submission
+
+        const formData =new FormData(event.currentTarget);
+        const email=formData.get("email");
+        const password = formData.get("password");
+
+
+ if (validateForm({ email, password })) {
+      await signIn.email({ email, password, },
+        {
+           onSuccess: () => {
+           redirect("/dashboard");
+          },
+          onError: (ctx) => {
+            setError({
+              error: true,
+              message: ctx.error.message,
+            });
+            // loading false
+          },
+        }
+      );
+    }
+  };
+
   return (
     <div className="flex flex-col">
         <Card>
@@ -24,22 +89,23 @@ export function LoginForm() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <form>
+                <form onSubmit={handleSubmitForm} noValidate>
                     <div className="flex flex-col gap-6  ">
                         <div className="grid  gap-3 ">
                             <Label htmlFor="email">Email</Label>
                             <Input 
                             id="email" 
-                            name="email " 
+                            name="email" 
                             type="email" 
-                            placeholder="Enter your email:"
+                            placeholder="Enter your email"
+                            autoComplete="current-password"
                             >
 
                             </Input>
                         </div>
                        <div className="grid gap-3">
                             <div className="flex items-center">
-                            <Label htmlFor="email">Password</Label>
+                            <Label htmlFor="pass">Password</Label>
                                 <Link
                                     href="/forgot-password"
                                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
@@ -55,15 +121,29 @@ export function LoginForm() {
                             autoComplete="current-password"
                             />
                         </div>
+                            {/* error message here */}
+                        <div className="flex justify-center">
+                            {error.error && (
+                            <span className="text-red-600 text-xs text-canter animate-pulse duration-700">
+                                {error.message}
+                            </span>)}
+                        </div>
+
                         <div className="flex flex-col gap-3">
-                            <Button type="submit" className="  w-full ">
-                                Login
+                            <Button type="submit" className="  w-full " disabled={isLoading}>
+                                {isLoading && <Loader2 className="animate-spin"/>}Login
                             </Button>
-                             <Button type="submit" variant="outline" className=" w-full ">
+                             <Button type="submit" variant="outline" className=" w-full " disabled={isLoading}>
                                 Login with Google
                             </Button>
                         </div>
                     </div>
+                        <div className="mt-4 text-center text-sm">
+                            Don't have an account?{" "}
+                        <Link href="/sign-up" className=" underline-offset-4 hover:underline" >
+                             Sign up
+                        </Link>
+                        </div>
                 </form>
             </CardContent>
         </Card>
