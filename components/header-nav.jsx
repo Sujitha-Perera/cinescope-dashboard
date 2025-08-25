@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo  }from "./logo";
+import Modetoggle from "./mode-toggle";
 export default function Head() {
   return (
   <header className=" border-primary/20 bg-background sticky top-0 z-50 w-full border-b">
@@ -11,7 +12,7 @@ export default function Head() {
         </span>
       </Link>
        
-        <nav className=" ml-auto flex item-center gap-4" >
+        <nav className=" ml-auto flex item-center gap-4 mt-4" >
           <Link href="/" 
           className="hover:text-primary text-sm font-medium transition-colors">
             Movies
@@ -28,7 +29,7 @@ export default function Head() {
           className="hover:text-primary text-sm font-medium transition-colors">
             Admin
           </Link>
-
+          <Modetoggle/>
         </nav>
       
    </div>
