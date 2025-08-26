@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-export default function page() {
+export default function AdminDashboard() {
   return (
     <div>
-      <Button/>
+      Dashboard
     </div>
   )
 }

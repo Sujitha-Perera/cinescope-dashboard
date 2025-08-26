@@ -80,7 +80,7 @@ export function SignUpForm({ className, ...props }) {
             console.log("onRequest", ctx);
           },
           onSuccess: () => {
-           redirect("/dashboard");
+           redirect("/admin");
           },
           onError: (ctx) => {
             setError({

@@ -62,10 +62,12 @@ export function LoginForm() {
 
 
  if (validateForm({ email, password })) {
+          setLoading(true);
       await signIn.email({ email, password, },
         {
            onSuccess: () => {
-           redirect("/dashboard");
+           setLoading(false); 
+           redirect("/admin");
           },
           onError: (ctx) => {
             setError({
@@ -73,6 +75,7 @@ export function LoginForm() {
               message: ctx.error.message,
             });
             // loading false
+            setLoading(false);
           },
         }
       );
@@ -98,7 +101,7 @@ export function LoginForm() {
                             name="email" 
                             type="email" 
                             placeholder="Enter your email"
-                            autoComplete="current-password"
+                            autoComplete="email"
                             >
 
                             </Input>
@@ -133,7 +136,7 @@ export function LoginForm() {
                             <Button type="submit" className="  w-full " disabled={isLoading}>
                                 {isLoading && <Loader2 className="animate-spin"/>}Login
                             </Button>
-                             <Button type="submit" variant="outline" className=" w-full " disabled={isLoading}>
+                             <Button type="button" variant="outline" className=" w-full " disabled={isLoading}>
                                 Login with Google
                             </Button>
                         </div>

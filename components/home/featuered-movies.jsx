@@ -1,9 +1,10 @@
   
 import { Button } from '@/components/ui/button'
-import Movielist from './movie-list'
+import Movielist, { MoviesListSkeleton } from './movie-list'
 import { Suspense } from 'react'
 import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
+
 
 export default function FeatueredMovies() {
   return (
@@ -31,9 +32,9 @@ export default function FeatueredMovies() {
               </div>
              </div>
             </div>
-         
-        <Suspense fallback={<div className='"h-96 animate-pulse rounded-lg bg-muted'/>}>
-              {/* movies cards here */}
+         {/* <MovieCardSkeleton/> */}
+        <Suspense fallback={<MoviesListSkeleton/>}>
+               movies cards here 
             <Movielist/>
         </Suspense>
       </div>
