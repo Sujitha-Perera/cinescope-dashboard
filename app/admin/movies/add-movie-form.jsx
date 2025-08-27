@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -18,6 +19,8 @@ import { getAllYears } from "@/lib/utils";
 
 
 export function AddMovieForm({onClose}) {
+
+    const router=useRouter();
     const years=getAllYears();
     const[isSubmitting,setIsSubmitting]=useState(false);
     // Controlled states
@@ -83,6 +86,8 @@ export function AddMovieForm({onClose}) {
     if(response ?.success){
         console.log(response);
         handleClose();
+        router.refresh();
+
     }
 
     };
@@ -140,9 +145,9 @@ export function AddMovieForm({onClose}) {
               <SelectValue placeholder="Select genre" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Ac">Action</SelectItem>
-              <SelectItem value="2024">Adventure</SelectItem>
-              <SelectItem value="2023">Sci</SelectItem>
+              <SelectItem value="Action">Action</SelectItem>
+              <SelectItem value="Adventure">Adventure</SelectItem>
+              <SelectItem value="Sci">Sci</SelectItem>
             </SelectContent>
           </Select>
         </div>

@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { MoreHorizontal } from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,11 +19,57 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 // import { MOVIES } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import UpdateMovieDialog from "./update-movie-dialog";
+import DeleteMovieDialog from "./delete-movie-dialog";
+import { deleteMovie } from "@/actions/movies";
+
 export default function MovieTable({movies}) {
+
+    const router=useRouter();
+    const[selectionMovie,setSelectedMovie]=useState(null);
+    const[showUpdateDialog,setShowUpdateDialog]=useState(false);
+    const[showDeleteDialog,setShowDeleteDialog]=useState(false);
+
+    const toggleUpdateDialog = (open) => {
+    // Using requestAnimationFrame to ensure the dialog opens after the state update
+    requestAnimationFrame(() => setShowUpdateDialog(open || !showUpdateDialog));
+  };
+
+    const toggleDeleteDialog = (open) => {
+    // Using requestAnimationFrame to ensure the dialog opens after the state update
+    requestAnimationFrame(() => setShowDeleteDialog(open || !showDeleteDialog));
+  };
+   
+  const handleDeleteMovies=async(movieId)=>{
+    const resp=await deleteMovie(movieId);
+
+        if(resp?.success){
+        setSelectedMovie(null);
+        toggleDeleteDialog(false);
+        router.refresh();
+    }
+  }
+
+  const getStatusClass=(status)=>{
+    switch(status){
+        case "published":
+            return "bg-green-100 text-green-800";
+        case "draft":
+            return "bg-yellow-100 text-yellow-800";
+        case "archived":
+            return "bg-red-100 text-red-800";
+        default:
+            return "bg-gray-100 text-gray-800";
+    }
+
+  }
+
   return (
     <div className="rounded-md border">
         <Table>
@@ -65,9 +110,9 @@ export default function MovieTable({movies}) {
                     ))}
                 </div>
             </TableCell>
-            <TableCell>{movie.rating}</TableCell>
+            <TableCell >{movie?.imdb?.rating}</TableCell>
            <TableCell className="capitalize">
-                   <Badge className="bg-green-100 text-green-800">{movie.status}</Badge> 
+                   <Badge className={getStatusClass(movie.status)}>{movie.status}</Badge> 
             
             </TableCell>
             <TableCell className="text-right">
@@ -77,13 +122,27 @@ export default function MovieTable({movies}) {
                             <MoreHorizontal className="h-4 w-4"/>
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent Align="end">
+                    <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Movie Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem 
+                            onClick = {()=>{
+                                setSelectedMovie(movie);
+                                toggleUpdateDialog(true);
+                            }}
+                            
+                            >
+                            Edit
+                            </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive"
+                            onClick = {()=>{
+                                setSelectedMovie(movie);
+                                toggleDeleteDialog(true);
+                            }}>
+                            Delete
+                            </DropdownMenuItem>
                     </DropdownMenuContent>
                     </DropdownMenu>
             </TableCell>
@@ -92,7 +151,19 @@ export default function MovieTable({movies}) {
             ))}
         </TableBody>
         </Table>
+        <UpdateMovieDialog
+            open={showUpdateDialog}
+            onOpenChange={toggleUpdateDialog}
+            movie={selectionMovie}
+        />
 
+        <DeleteMovieDialog 
+            open={showDeleteDialog}
+            onOpenChange={toggleDeleteDialog}
+            movie={selectionMovie}
+            onConfirm={handleDeleteMovies}
+            isLoading={true}
+        />
     </div>
   )
 }

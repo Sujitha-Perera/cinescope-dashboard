@@ -2,6 +2,7 @@
 //client part
 "use server";
 import { db } from "@/lib/db";
+import { ObjectId } from "mongodb";
 // import { success } from "better-auth/*";
 export const getMovies=async()=>{
     try {
@@ -48,5 +49,58 @@ export const createMovie=async(movie)=>{
         }
     } catch  {
         console.log("Mongodb insert failed");
+    }
+}
+
+// update movie action
+export const updateMovie = async (movieId, movieDoc) => {
+  try {
+    if (!movieId) throw new Error("Movie ID is missing");
+
+    const result = await db
+      .collection("movies_n")
+      .updateOne(
+        { _id: new ObjectId(movieId) }, 
+        { $set: movieDoc },
+        { upsert: false } 
+      );
+
+    if (result.acknowledged) {
+      return {
+        success: true,
+        message: "Movie updated successfully!",
+      };
+    } else {
+      return {
+        success: false,
+        message: "Movie update failed!",
+      };
+    }
+  } catch (err) {
+    console.log("MongoDB update failed!", err);
+    return { success: false, message: err.message };
+  }
+};
+// delete movie action
+export const deleteMovie=async(movieId)=>{
+    try {
+        const result = await db
+            .collection("movies_n")
+            .deleteOne(
+                { _id: new ObjectId(movieId) }
+
+      );
+
+        if(result.acknowledged){
+            console.log(`A movie was Deleted with the _id: ${result.insertedId}`)
+            return{
+                success:true,
+                message:"Movie deleted successfully"
+            }
+        }else{
+            return undefined;
+        }
+    } catch  {
+        console.log("Mongodb delete failed");
     }
 }

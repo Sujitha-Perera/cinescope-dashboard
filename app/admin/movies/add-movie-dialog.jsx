@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,6 +15,7 @@ import { AddMovieForm } from "./add-movie-form";
 
 export default function AddMovieDialog() {
 
+    
     const [showAddMovie,setShowAddMovie]=useState(false);
 
   return (

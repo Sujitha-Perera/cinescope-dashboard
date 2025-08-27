@@ -9,7 +9,8 @@ export default async function MovieData() {
 
             const refinedmovies=movies.map((movie)=>({
 
-                   id: movie._id.toString(),
+                    _id: movie._id.toString(),
+                    id: movie._id.toString(),
                     title: movie.title,
                     year: movie.year,
                     plot: movie.plot,
