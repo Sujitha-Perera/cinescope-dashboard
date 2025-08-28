@@ -1,5 +1,7 @@
 import AdminSidebar from "@/components/admin-sidebar";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import UserNav from "@/components/user-nav";
+
 
 export default function AdminLayout({ children }) {
   return (
@@ -12,8 +14,8 @@ export default function AdminLayout({ children }) {
             <div className="flex h-16 items-center justify-between px-4">
                 <h1 className="text-xl font-bold">Admin Dashboard</h1>
                 {/* user dropdown navigation */}
-                <div className="bg-red-400 rounded-full h-10 w-10 flex justify-center item-center ">
-                    hs
+                <div className=" rounded-full h-10 w-10 flex justify-center item-center ">
+                    <UserNav/>
                 </div>
             </div>
         </header>

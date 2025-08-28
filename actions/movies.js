@@ -4,6 +4,8 @@
 import { db } from "@/lib/db";
 import { ObjectId } from "mongodb";
 // import { success } from "better-auth/*";
+
+//get all movie action
 export const getMovies=async()=>{
     try {
         //using fetch API to get movies from the server
@@ -30,6 +32,32 @@ export const getMovies=async()=>{
         console.log("Error fetching movies",error);
         return undefined;
 
+    }
+}
+
+//get all movie action
+export const getMovieById=async(movieId)=>{
+
+    try {
+        const result = await db
+            .collection("movies")
+            .findOne(
+                { _id: new ObjectId(movieId) } );
+
+         console.log(result)   
+
+        if(result && Object.keys(result).length>0){
+            console.log(`A movie found with the _id: ${result._id}`)
+            return{
+                success:true,
+                message:"Movie fetched successfully",
+                data:result,
+            }
+        }else{
+            return undefined;
+        }
+    } catch  {
+        console.log("Mongodb fetch failed");
     }
 }
 

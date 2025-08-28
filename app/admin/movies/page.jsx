@@ -1,7 +1,7 @@
 import AddMovieDialog from "./add-movie-dialog"
 import MovieData from "./movie-data";
 
-
+//server component
 export default function MoviesPage() {
 
 

@@ -1,5 +1,6 @@
 // this is the client component(CSR=Client Site Rendering)
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { 
     Card ,
@@ -28,6 +29,8 @@ export function LoginForm() {
 
     const [isLoading,setLoading]=useState(false);
     const [error,setError]=useState(DEFAULT_ERROR);
+    const router = useRouter();
+
     const validateForm=({email,password})=>{
         if(email===""){
             setError({
@@ -67,9 +70,11 @@ export function LoginForm() {
         {
            onSuccess: () => {
            setLoading(false); 
-           redirect("/admin");
+           console.log("✅ Login success, redirecting...");
+           router.push("/admin");
           },
           onError: (ctx) => {
+            console.log("❌ Login failed:", ctx);
             setError({
               error: true,
               message: ctx.error.message,
