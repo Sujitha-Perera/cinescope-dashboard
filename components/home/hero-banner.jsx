@@ -1,10 +1,11 @@
 
 //hero banner Section
 
+//Dumb component
 export default function Herobanner(
 
   {title = "CineScope Movie Database",
-  description = "Sample Description Here..."}
+  description = "Browse through a world of films, from timeless classics to the latest blockbusters. Search, \nfilter, and explore detailed movie information – all in one place."}
 
 
 ) {
@@ -22,7 +23,7 @@ export default function Herobanner(
              <h1 className="text-white text-6xl font-bold text-center py-20">
           {title}
         </h1>
-        <p className="text-white text-center text-xl">{description}</p>
+        <p className="text-white text-center text-xl whitespace-pre-line">{description}</p>
     </div>
  
 

@@ -34,7 +34,7 @@ export default function FeatueredMovies() {
             </div>
          {/* <MovieCardSkeleton/> */}
         <Suspense fallback={<MoviesListSkeleton/>}>
-               movies cards here 
+
             <Movielist/>
         </Suspense>
       </div>

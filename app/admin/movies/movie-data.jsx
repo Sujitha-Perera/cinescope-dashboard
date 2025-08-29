@@ -1,13 +1,17 @@
 import { db } from "@/lib/db";
 import MovieTable from "./movie-table";
+import { searchMovies } from "@/actions/movies";
 
-export default async function MovieData() {
+export default async function MovieData({query=""}) {
     try {
-        const movies=await db.collection("movies_n").find({}).limit(50).toArray();
+        // const movies=await db.collection("movies_n").find({}).limit(50).toArray();
+        // console.log("MovieData query::", query);
+        const movies=await searchMovies(query);
+        // console.log(movies);
 
-        if(movies.length>0){
+        if(movies && movies.data.length > 0 ){
 
-            const refinedmovies=movies.map((movie)=>({
+            const refinedmovies=movies.data.map((movie)=>({
 
                     _id: movie._id.toString(),
                     id: movie._id.toString(),
@@ -24,21 +28,24 @@ export default async function MovieData() {
 
             }))
             return <MovieTable movies={refinedmovies}/>
-        }else{
-            throw new Error("No Movie found in the database");
+        } else {
+            return (
+            <div className="flex justify-center items-center h-[400px]">
+                <p className="text-destructive font-medium animate-pulse duration-1000">
+                No Movies Available!
+                </p>
+            </div>
+            );
         }
-
-    } catch (error) {
-        console.log("Error fetching movies",error)
-        return(
-        <div className="flex justify-center items-center h-[400px]">
+        } catch (error) {
+        console.log("Error fetching movies", error); // real fetch errors only
+        return (
+            <div className="flex justify-center items-center h-[400px]">
             <p className="text-destructive font-medium animate-pulse duration-1000">
-            No Movies Available!
+                Failed to fetch movies!
             </p>
-        </div>
-
-        )
-        
-    }
-  return<div>MovieData</div>;
+            </div>
+        );
+        }
+//   return<div>MovieData</div>;
 }

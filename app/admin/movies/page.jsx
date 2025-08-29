@@ -1,8 +1,11 @@
 import AddMovieDialog from "./add-movie-dialog"
 import MovieData from "./movie-data";
+import MovieSelectors from "./movie-selecters";
 
 //server component
-export default function MoviesPage() {
+export default async function MoviesPage(props) {
+  const searchParams= await props.searchParams;
+  const query=searchParams?.query || "";
 
 
   return (
@@ -20,7 +23,8 @@ export default function MoviesPage() {
           </div>
           <AddMovieDialog/>
         </div>
-        <MovieData/>
+        <MovieSelectors/>
+        <MovieData query={query}/>
     </div>
   )
 }

@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { createMovie } from "@/actions/movies";
 import { getAllYears } from "@/lib/utils";
 
-
+//smart component
 export function AddMovieForm({onClose}) {
 
     const router=useRouter();
