@@ -1,6 +1,9 @@
 // import { MOVIES } from "@/lib/data"
 import { db } from "@/lib/db";
-import { NextResponse } from "next/server"
+import { exportTraceState } from "next/dist/trace";
+import { NextResponse } from "next/server";
+
+
 
 //first GET api route
 //server part

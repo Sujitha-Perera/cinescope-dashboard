@@ -19,12 +19,16 @@ export async function generateMetadata(props) {
 export default async function MovieDetailsPage(props) {
 
     const {id}= await props.params
-    const serch=await props.searchParams;
+    // const serch=await props.searchParams;
     const movie=await getMovieById(id);
 
+  // Simulate a delay for demonstration (2 seconds)
+  //   await new Promise((resolve) => setTimeout(resolve, 2000));
+
     // console.log("moviedata:",movie);
-
-
+if(!movie || !movie.data){
+throw new Error ("movie not found");
+}
    return  (
         <main className="flex flex-col  justify-center py-16 px-4 mx-auto ">
             <h1 className="text-amber-600 text-center font-bold text-xl">

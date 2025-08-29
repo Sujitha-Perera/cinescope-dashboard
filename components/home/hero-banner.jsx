@@ -19,11 +19,13 @@ export default function Herobanner(
           </div>
     </div>
     
-    <div className="relative z-20 " >
-             <h1 className="text-white text-6xl font-bold text-center py-20">
+    <div className="relative z-20 " >     
+        <h1 className="text-white text-6xl font-bold text-center py-20">
           {title}
         </h1>
-        <p className="text-white text-center text-xl whitespace-pre-line">{description}</p>
+        <p className="text-white text-center text-xl whitespace-pre-line">
+          {description}
+        </p>
     </div>
  
 
