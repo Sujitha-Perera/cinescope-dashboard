@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 export const GET=async()=>{
     try {
 
-        const movies=await db.collection("movies").find({}).limit(2).toArray();
+        const movies=await db.collection("movies").find({}).limit(8).toArray();
         // return NextResponse.json(MOVIES, {status:200});
         return NextResponse.json(movies);
         
