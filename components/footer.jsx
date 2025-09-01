@@ -21,7 +21,7 @@ export default function Footer() {
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setStatus({ loading: false, msg: "Subscription successful! Check Mailtrap inbox.", ok: true });
+        setStatus({ loading: false, msg: "Subscription successful! Check your inbox.", ok: true });
         setEmail("");
       } else {
         throw new Error(data?.error || "Something went wrong");
@@ -56,10 +56,8 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">Navigation</h4>
             <ul className="space-y-2">
-              <li><Link href="/" className="hover:text-[#1dd1a1] transition-colors">Home</Link></li>
-              <li><Link href="/blog" className="hover:text-[#1dd1a1] transition-colors">Blog</Link></li>
+              <li><Link href="/" className="hover:text-[#1dd1a1] transition-colors">Home</Link></li> 
               <li><Link href="/about" className="hover:text-[#1dd1a1] transition-colors">About</Link></li>
-              <li><Link href="/contact" className="hover:text-[#1dd1a1] transition-colors">Contact</Link></li>
             </ul>
           </div>
 
@@ -95,7 +93,9 @@ export default function Footer() {
         <div className="border-t border-gray-700 mt-12 pt-6 text-sm flex flex-col md:flex-row justify-between items-center">
           <span>&copy; {year} SJ CodeLab. All rights reserved.</span>
           <span>
-            Built with <a href="https://nextjs.org/" className="hover:text-[#1dd1a1] transition-colors">Next.js</a> & <a href="https://tailwindcss.com/" className="hover:text-[#1dd1a1] transition-colors">Tailwind CSS</a>.
+            Built with 
+            <a href="https://nextjs.org/" className="hover:text-[#1dd1a1] transition-colors">Next.js</a>
+             & <a href="https://tailwindcss.com/" className="hover:text-[#1dd1a1] transition-colors">Tailwind CSS</a>.
           </span>
         </div>
       </div>
