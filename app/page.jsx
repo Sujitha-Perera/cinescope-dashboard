@@ -1,5 +1,6 @@
 //SSR Server side rendering-server component  
 
+import Footer from "@/components/footer";
 import Mynavbar from "@/components/header-nav";
 import FeatueredMovies from "@/components/home/featuered-movies";
 import Herobanner from "@/components/home/hero-banner";
@@ -26,7 +27,7 @@ export  default async function Home() {
         <FeatueredMovies/>
       </main>
       <footer className=" bg-amber-200 h-72">
-        Footer section
+        <Footer/>
     
 
       </footer>

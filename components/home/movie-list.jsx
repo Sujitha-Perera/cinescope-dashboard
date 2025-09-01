@@ -1,32 +1,30 @@
-
 // import { MOVIES } from "@/lib/data"
 
 import MovieCard, { MovieCardSkeleton } from "./movie-card";
-import { getMovies } from "@/actions/movies"
-
-
+import { getMovies } from "@/actions/movies";
 
 export default async function Movielist() {
-  const movies =await getMovies();
-  if(!movies || movies.length===0){
-    return <div className="text-foreground font-medium text-center py-12"> 
-      No movies found
-    </div>;
+  const movies = await getMovies();
+  if (!movies || movies.length === 0) {
+    return (
+      <div className="text-foreground font-medium text-center py-12">
+        No movies found
+      </div>
+    );
   }
   // console.log("Movies",movies);
   return (
-      <>
-
+    <>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {/*loop movies  */}
-        {movies.map((movie, index)=>(
+        {movies.map((movie, index) => (
           <div key={`${movie._id}-${index}`} className="">
-              <MovieCard  movie={movie}/>
+            <MovieCard movie={movie} />
           </div>
         ))}
       </div>
     </>
-  )
+  );
 }
 export function MoviesListSkeleton() {
   return (
