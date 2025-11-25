@@ -4,7 +4,7 @@
 //Dumb component
 export default function Herobanner(
 
-  {title = "CineScope Movie ",
+  {title = "CineScope Movie Dashboard",
   description = "Browse through a world of films, from timeless classics to the latest blockbusters. Search, \nfilter, and explore detailed movie information – all in one place."}
 
 
