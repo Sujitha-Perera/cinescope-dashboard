@@ -16,7 +16,7 @@ export default async function Movielist() {
   return (
     <>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {/*loop movies  */}
+        {/* movie loo */}
         {movies.map((movie, index) => (
           <div key={`${movie._id}-${index}`} className="">
             <MovieCard movie={movie} />
